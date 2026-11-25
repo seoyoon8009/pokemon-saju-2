@@ -199,6 +199,7 @@ label,
 input[type="text"],
 select {
   width: 100%;
+  min-width: 0;
   height: 42px;
   padding: 6px 12px;
   font-family: inherit;
@@ -286,12 +287,13 @@ select:focus {
 
 .date-row {
   display: grid;
-  grid-template-columns: 1.4fr 1fr 1fr;
-  gap: 8px;
+  grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr) minmax(0, 1fr);
+  gap: 6px;
 }
 
 .date-row select {
-  padding: 6px 10px;
+  padding: 6px 8px;
+  font-size: 14px;
 }
 
 .field-error {
@@ -932,7 +934,7 @@ select:focus {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(15, 23, 42, 0.72);
+  background: rgba(15, 23, 42, 0.78);
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
 }
@@ -947,14 +949,14 @@ select:focus {
 
 .pokeball {
   position: relative;
-  width: 96px;
-  height: 96px;
+  width: 104px;
+  height: 104px;
   border-radius: 50%;
   border: 5px solid #1e293b;
   overflow: hidden;
   background: #ffffff;
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
-  transform-origin: center 80%;
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.4);
+  transform-origin: center 82%;
 }
 
 .pokeball-top {
@@ -990,8 +992,8 @@ select:focus {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 26px;
-  height: 26px;
+  width: 28px;
+  height: 28px;
   border-radius: 50%;
   background: #ffffff;
   border: 5px solid #1e293b;
@@ -1008,28 +1010,37 @@ select:focus {
 
 /* 좌우 2회 까딱임 후 팽창 */
 .pokeball.is-shaking {
-  animation: pokeball-wobble 1.15s ease-in-out forwards;
+  animation: pokeball-wobble 1.35s ease-in-out forwards;
+}
+
+.pokeball.is-shaking .pokeball-button {
+  animation: pokeball-glow 1.35s ease-in-out forwards;
 }
 
 @keyframes pokeball-wobble {
-  0%   { transform: rotate(0deg) scale(1); }
-  16%  { transform: rotate(-22deg) scale(1); }
-  32%  { transform: rotate(18deg) scale(1); }
-  50%  { transform: rotate(-16deg) scale(1); }
-  66%  { transform: rotate(12deg) scale(1); }
-  80%  { transform: rotate(0deg) scale(0.96); }
-  100% { transform: rotate(0deg) scale(1.18); }
+  0%   { transform: rotate(0deg) scale(0.92); }
+  18%  { transform: rotate(-24deg) scale(1); }
+  36%  { transform: rotate(20deg) scale(1); }
+  54%  { transform: rotate(-18deg) scale(1); }
+  72%  { transform: rotate(14deg) scale(1); }
+  86%  { transform: rotate(0deg) scale(0.95); }
+  100% { transform: rotate(0deg) scale(1.22); }
+}
+
+@keyframes pokeball-glow {
+  0%, 70% { background: #ffffff; box-shadow: none; }
+  90%, 100% { background: #fde047; box-shadow: 0 0 18px #fef08a; }
 }
 
 /* 팡! 터지는 빛 번쩍임 */
 .pokeball-flash {
   position: absolute;
-  top: 48px;
+  top: 52px;
   left: 50%;
-  width: 140px;
-  height: 140px;
+  width: 150px;
+  height: 150px;
   border-radius: 50%;
-  background: radial-gradient(circle, #ffffff 0%, rgba(255, 255, 255, 0.85) 45%, rgba(255, 255, 255, 0) 75%);
+  background: radial-gradient(circle, #ffffff 0%, rgba(255, 255, 255, 0.9) 45%, rgba(255, 255, 255, 0) 75%);
   transform: translate(-50%, -50%) scale(0.1);
   opacity: 0;
   pointer-events: none;
@@ -1037,22 +1048,22 @@ select:focus {
 }
 
 .pokeball-flash.is-flashing {
-  animation: pokeball-burst 0.35s ease-out forwards;
+  animation: pokeball-burst 0.4s ease-out forwards;
 }
 
 @keyframes pokeball-burst {
   0%   { transform: translate(-50%, -50%) scale(0.2); opacity: 0; }
-  45%  { transform: translate(-50%, -50%) scale(2.8); opacity: 1; }
-  100% { transform: translate(-50%, -50%) scale(3.6); opacity: 0; }
+  45%  { transform: translate(-50%, -50%) scale(3); opacity: 1; }
+  100% { transform: translate(-50%, -50%) scale(4); opacity: 0; }
 }
 
 /* 결과 카드 톡 튀어나오기 */
 .result-pop-in {
-  animation: result-pop-in 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: result-pop-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 @keyframes result-pop-in {
-  0%   { opacity: 0; transform: scale(0.88) translateY(20px); }
-  65%  { opacity: 1; transform: scale(1.02) translateY(-4px); }
+  0%   { opacity: 0; transform: scale(0.9) translateY(16px); }
+  65%  { opacity: 1; transform: scale(1.02) translateY(-3px); }
   100% { opacity: 1; transform: scale(1) translateY(0); }
 }
