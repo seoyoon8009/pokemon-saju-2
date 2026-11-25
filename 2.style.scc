@@ -1,0 +1,1058 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+  --primary: #0075de;
+  --primary-active: #005bab;
+  --secondary: #213183;
+  --on-primary: #ffffff;
+  --canvas: #ffffff;
+  --canvas-soft: #f6f5f4;
+  --surface: #ffffff;
+  --ink: #000000;
+  --ink-secondary: #31302e;
+  --ink-muted: #615d59;
+  --ink-faint: #a39e98;
+  --hairline: #e6e6e6;
+
+  --accent-sky: #62aef0;
+  --accent-purple: #d6b6f6;
+  --accent-purple-deep: #391c57;
+  --accent-pink: #ff64c8;
+  --accent-orange: #dd5b00;
+  --accent-orange-deep: #793400;
+  --accent-teal: #2a9d99;
+  --accent-green: #1aae39;
+  --accent-brown: #523410;
+
+  --rounded-xs: 4px;
+  --rounded-sm: 5px;
+  --rounded-md: 8px;
+  --rounded-lg: 12px;
+  --rounded-xl: 16px;
+  --rounded-full: 9999px;
+  --shadow-soft:
+    rgba(0, 0, 0, 0.01) 0 0.175px 1.041px,
+    rgba(0, 0, 0, 0.02) 0 0.8px 2.925px,
+    rgba(0, 0, 0, 0.027) 0 2.025px 7.847px,
+    rgba(0, 0, 0, 0.04) 0 4px 18px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard", system-ui, "Segoe UI", sans-serif;
+  font-feature-settings: "lnum" 1, "locl" 1;
+  background-color: var(--canvas-soft);
+  color: var(--ink);
+  display: flex;
+  justify-content: center;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+.app-container {
+  width: 100%;
+  max-width: 420px;
+  padding: 24px 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--hairline);
+  border-radius: var(--rounded-xl);
+  padding: 28px 24px;
+  box-shadow: var(--shadow-soft);
+}
+
+.hidden {
+  display: none !important;
+}
+
+.badge {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.33;
+  letter-spacing: 0.125px;
+  color: var(--primary);
+  background: var(--surface);
+  border: 1px solid var(--hairline);
+  padding: 4px 10px;
+  border-radius: var(--rounded-full);
+  margin-bottom: 14px;
+}
+
+h1 {
+  font-size: 26px;
+  font-weight: 700;
+  line-height: 1.23;
+  letter-spacing: -0.625px;
+  color: var(--ink);
+  margin-bottom: 8px;
+  word-break: keep-all;
+}
+
+.subtitle {
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--ink-muted);
+  line-height: 1.5;
+  margin-bottom: 20px;
+  word-break: keep-all;
+}
+
+/* 친구 공유 초대 배너 (입력 화면) */
+.friend-invite {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--canvas-soft);
+  border: 1px solid var(--hairline);
+  border-left: 4px solid var(--primary);
+  border-radius: var(--rounded-lg);
+  padding: 12px 14px;
+  margin-bottom: 20px;
+}
+
+.friend-invite-img {
+  width: 58px;
+  height: 58px;
+  object-fit: contain;
+  background: var(--surface);
+  border: 1px solid var(--hairline);
+  border-radius: var(--rounded-md);
+  padding: 4px;
+  flex-shrink: 0;
+}
+
+.friend-invite-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.friend-invite-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  margin-bottom: 4px;
+}
+
+.friend-invite-badge {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--primary);
+  background: var(--surface);
+  border: 1px solid var(--hairline);
+  padding: 2px 7px;
+  border-radius: var(--rounded-full);
+}
+
+.clear-friend-btn {
+  background: none;
+  border: none;
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--ink-muted);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.friend-invite-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.35;
+  margin-bottom: 2px;
+  word-break: keep-all;
+}
+
+.friend-invite-desc {
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--ink-muted);
+  line-height: 1.4;
+  word-break: keep-all;
+}
+
+.form-group {
+  margin-bottom: 16px;
+}
+
+label,
+.label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink-secondary);
+  margin-bottom: 6px;
+}
+
+input[type="text"],
+select {
+  width: 100%;
+  height: 42px;
+  padding: 6px 12px;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 400;
+  border: 1px solid #dddddd;
+  border-radius: var(--rounded-xs);
+  background-color: var(--surface);
+  color: var(--ink);
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+input[type="text"]::placeholder {
+  color: var(--ink-faint);
+}
+
+input[type="text"]:focus,
+select:focus {
+  border-color: var(--primary);
+  box-shadow: var(--shadow-soft), 0 0 0 2px rgba(0, 117, 222, 0.14);
+}
+
+.segmented {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+  padding: 4px;
+  background: var(--canvas-soft);
+  border: 1px solid var(--hairline);
+  border-radius: var(--rounded-md);
+}
+
+.seg-option {
+  margin: 0;
+  cursor: pointer;
+}
+
+.seg-option input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.seg-option span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 36px;
+  border-radius: var(--rounded-sm);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ink-muted);
+  transition: background 0.15s, color 0.15s;
+}
+
+.seg-option input:checked + span {
+  background: var(--surface);
+  color: var(--primary);
+  font-weight: 600;
+  border: 1px solid var(--hairline);
+}
+
+.seg-option input:focus-visible + span {
+  outline: 2px solid var(--primary);
+  outline-offset: 1px;
+}
+
+.leap-check {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin: 10px 0 0;
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--ink-secondary);
+  cursor: pointer;
+}
+
+.leap-check input {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--primary);
+}
+
+.date-row {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr;
+  gap: 8px;
+}
+
+.date-row select {
+  padding: 6px 10px;
+}
+
+.field-error {
+  margin-top: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--accent-orange);
+}
+
+.btn-primary,
+.btn-secondary {
+  width: 100%;
+  height: 48px;
+  font-family: inherit;
+  font-size: 15.5px;
+  font-weight: 500;
+  line-height: 1.5;
+  border-radius: var(--rounded-full);
+  cursor: pointer;
+  transition: background-color 0.15s, transform 0.1s;
+}
+
+.btn-primary {
+  background-color: var(--primary);
+  color: var(--on-primary);
+  border: none;
+  margin-top: 8px;
+}
+
+.btn-primary:active {
+  background-color: var(--primary-active);
+  transform: scale(0.98);
+}
+
+.btn-primary:disabled {
+  opacity: 0.65;
+  cursor: wait;
+}
+
+.btn-secondary {
+  background-color: var(--surface);
+  color: var(--ink);
+  border: 1px solid var(--hairline);
+  box-shadow: var(--shadow-soft);
+  margin-top: 10px;
+}
+
+.btn-secondary:active {
+  background-color: var(--canvas-soft);
+  transform: scale(0.98);
+}
+
+.result-box {
+  border-radius: var(--rounded-lg);
+  padding: 24px 20px;
+  text-align: center;
+  margin-bottom: 20px;
+  border: 1px solid var(--hairline);
+  border-top-width: 6px;
+  background: var(--surface);
+}
+
+.theme-wood { border-top-color: var(--accent-green); }
+.theme-fire { border-top-color: var(--accent-orange); }
+.theme-earth { border-top-color: var(--accent-brown); }
+.theme-metal { border-top-color: var(--ink-muted); }
+.theme-water { border-top-color: var(--accent-teal); }
+
+.pillar-tag {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.125px;
+  padding: 4px 12px;
+  border-radius: var(--rounded-full);
+  background: var(--canvas-soft);
+  border: 1px solid var(--hairline);
+  color: var(--primary);
+  margin-bottom: 14px;
+}
+
+.result-img {
+  display: block;
+  width: 164px;
+  height: 164px;
+  object-fit: contain;
+  padding: 12px;
+  border-radius: var(--rounded-lg);
+  margin: 0 auto 14px;
+  background-color: var(--canvas-soft);
+  border: 1px solid var(--hairline);
+}
+
+.user-label {
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--ink-muted);
+  margin-bottom: 4px;
+}
+
+#result-title {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: -0.5px;
+  color: var(--ink);
+  margin-bottom: 6px;
+}
+
+.result-sub {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ink-secondary);
+  margin-bottom: 16px;
+  word-break: keep-all;
+}
+
+.birth-info {
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--ink-faint);
+  margin: -10px 0 14px;
+}
+
+.keyword-list {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.keyword-chip {
+  font-size: 12px;
+  font-weight: 500;
+  background: var(--canvas-soft);
+  border: 1px solid var(--hairline);
+  padding: 4px 8px;
+  border-radius: var(--rounded-xs);
+  color: var(--ink-secondary);
+}
+
+.result-desc {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.6;
+  color: var(--ink-secondary);
+  text-align: left;
+  background: var(--canvas-soft);
+  border: 1px solid var(--hairline);
+  padding: 14px;
+  border-radius: var(--rounded-md);
+  word-break: keep-all;
+}
+
+.yinyang-box {
+  margin-top: 10px;
+  text-align: left;
+  background: var(--canvas-soft);
+  border: 1px solid var(--hairline);
+  padding: 12px 14px;
+  border-radius: var(--rounded-md);
+}
+
+.yinyang-tag {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--accent-purple-deep);
+  background: var(--surface);
+  border: 1px solid var(--accent-purple);
+  padding: 3px 10px;
+  border-radius: var(--rounded-full);
+  margin-bottom: 6px;
+}
+
+.yinyang-text {
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.55;
+  color: var(--ink-secondary);
+  word-break: keep-all;
+}
+
+/* 친구와의 팀플·우정 궁합 카드 */
+.compat-section {
+  margin-top: 18px;
+  padding: 16px 14px;
+  background: var(--canvas-soft);
+  border: 1px solid var(--hairline);
+  border-radius: var(--rounded-lg);
+  text-align: left;
+}
+
+.compat-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.compat-header .partner-section-title {
+  margin-bottom: 0;
+}
+
+.compat-score {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--on-primary);
+  background: var(--primary);
+  padding: 3px 10px;
+  border-radius: var(--rounded-full);
+}
+
+.compat-duo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  background: var(--surface);
+  border: 1px solid var(--hairline);
+  border-radius: var(--rounded-md);
+  padding: 12px 10px;
+  margin-bottom: 10px;
+}
+
+.compat-member {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  flex: 1;
+}
+
+.compat-avatar {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+}
+
+.compat-member-name {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ink);
+  text-align: center;
+  word-break: keep-all;
+}
+
+.compat-heart {
+  font-size: 18px;
+}
+
+.compat-headline {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 4px;
+  word-break: keep-all;
+}
+
+.compat-desc {
+  font-size: 12.5px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--ink-secondary);
+  word-break: keep-all;
+}
+
+/* 사주 명식 */
+.saju-section {
+  margin-top: 18px;
+  padding-top: 18px;
+  border-top: 1px solid var(--hairline);
+}
+
+.pillar-table {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+}
+
+.pillar-col {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 6px 4px;
+  border-radius: var(--rounded-lg);
+}
+
+.pillar-col.is-me {
+  background: var(--canvas-soft);
+  box-shadow: inset 0 0 0 1.5px var(--primary);
+}
+
+.pillar-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--ink-muted);
+}
+
+.pillar-col.is-me .pillar-label {
+  color: var(--primary);
+}
+
+.glyph {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 1 / 1;
+  border-radius: var(--rounded-md);
+  color: var(--on-primary);
+}
+
+.glyph-hanja {
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.glyph-hangul {
+  font-size: 10px;
+  font-weight: 500;
+  opacity: 0.92;
+  margin-top: 2px;
+}
+
+.glyph-empty {
+  background: var(--canvas-soft);
+  color: var(--ink-faint);
+  border: 1px dashed #cccccc;
+}
+
+.el-wood { background-color: var(--accent-green); }
+.el-fire { background-color: var(--accent-orange); }
+.el-earth { background-color: #8c581c; }
+.el-metal { background-color: var(--ink-muted); }
+.el-water { background-color: var(--accent-teal); }
+
+.saju-note {
+  margin-top: 8px;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--ink-muted);
+  word-break: keep-all;
+}
+
+.element-title {
+  margin-top: 18px;
+}
+
+.element-chart {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background: var(--canvas-soft);
+  border: 1px solid var(--hairline);
+  padding: 12px 14px;
+  border-radius: var(--rounded-md);
+}
+
+.el-row {
+  display: grid;
+  grid-template-columns: 40px 1fr 32px;
+  align-items: center;
+  gap: 8px;
+}
+
+.el-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink);
+  text-align: left;
+}
+
+.el-name small {
+  font-size: 11px;
+  font-weight: 400;
+  color: var(--ink-faint);
+  margin-left: 2px;
+}
+
+.el-track {
+  height: 8px;
+  background: var(--hairline);
+  border-radius: var(--rounded-full);
+  overflow: hidden;
+}
+
+.el-bar {
+  height: 100%;
+  border-radius: var(--rounded-full);
+}
+
+.el-count {
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--ink-muted);
+  text-align: right;
+}
+
+.el-count.is-max {
+  color: var(--ink);
+  font-weight: 700;
+}
+
+.element-summary {
+  margin-top: 10px;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.55;
+  color: var(--ink-secondary);
+  text-align: left;
+  word-break: keep-all;
+}
+
+.element-summary strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+/* 캠퍼스 파트너 포켓몬 섹션 */
+.partner-section {
+  margin-top: 18px;
+  padding-top: 18px;
+  border-top: 1px solid var(--hairline);
+}
+
+.partner-section-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 10px;
+}
+
+.partner-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.partner-card {
+  background: var(--canvas-soft);
+  border: 1px solid var(--hairline);
+  border-radius: var(--rounded-lg);
+  padding: 14px 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.partner-role {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 5px;
+}
+
+.partner-badge {
+  font-size: 10px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: var(--rounded-full);
+  background: var(--surface);
+  margin-bottom: 8px;
+}
+
+.badge-hap {
+  border: 1px solid var(--accent-pink);
+  color: #9d174d;
+}
+
+.badge-sangsaeng {
+  border: 1px solid var(--accent-sky);
+  color: var(--primary-active);
+}
+
+.partner-img {
+  width: 72px;
+  height: 72px;
+  object-fit: contain;
+  margin-bottom: 6px;
+}
+
+.partner-name {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 4px;
+}
+
+.partner-reason {
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 1.45;
+  color: var(--ink-muted);
+  word-break: keep-all;
+}
+
+/* 오늘의 캠퍼스 운세 섹션 */
+.fortune-section {
+  margin-top: 18px;
+  padding-top: 18px;
+  border-top: 1px solid var(--hairline);
+  text-align: left;
+}
+
+.fortune-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.fortune-header .partner-section-title {
+  margin-bottom: 0;
+}
+
+.today-tag {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--primary);
+  background: var(--canvas-soft);
+  border: 1px solid var(--hairline);
+  padding: 3px 10px;
+  border-radius: var(--rounded-full);
+}
+
+.fortune-overall {
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.55;
+  color: var(--ink);
+  background: var(--canvas-soft);
+  border: 1px solid var(--hairline);
+  padding: 12px 14px;
+  border-radius: var(--rounded-md);
+  margin-bottom: 10px;
+  word-break: keep-all;
+}
+
+.fortune-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.fortune-item {
+  background: var(--surface);
+  border: 1px solid var(--hairline);
+  border-radius: var(--rounded-lg);
+  padding: 12px 14px;
+}
+
+.fortune-item-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 5px;
+}
+
+.fortune-cat {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.fortune-badge {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: var(--rounded-full);
+  background: var(--canvas-soft);
+  border: 1px solid var(--hairline);
+}
+
+.badge-high {
+  color: #137a29;
+  border-color: var(--accent-green);
+}
+
+.badge-good {
+  color: var(--primary);
+  border-color: var(--accent-sky);
+}
+
+.badge-steady {
+  color: var(--ink-secondary);
+  border-color: var(--hairline);
+}
+
+.badge-care {
+  color: var(--accent-orange-deep);
+  border-color: var(--accent-orange);
+}
+
+.fortune-text {
+  font-size: 12.5px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--ink-secondary);
+  word-break: keep-all;
+}
+
+.copy-msg {
+  text-align: center;
+  font-size: 13px;
+  color: var(--accent-green);
+  font-weight: 600;
+  margin-top: 10px;
+  word-break: keep-all;
+}
+
+/* 하단 비영리 팬메이드 안내 푸터 */
+.app-footer {
+  margin-top: 18px;
+  padding: 0 8px;
+  text-align: center;
+  font-size: 11.5px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--ink-muted);
+  word-break: keep-all;
+}
+
+.footer-sub {
+  margin-top: 3px;
+  font-size: 10.5px;
+  color: var(--ink-faint);
+}
+
+/* ===== 몬스터볼 결과 전환 연출 ===== */
+.pokeball-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(15, 23, 42, 0.72);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+.pokeball-stage {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.pokeball {
+  position: relative;
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  border: 5px solid #1e293b;
+  overflow: hidden;
+  background: #ffffff;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+  transform-origin: center 80%;
+}
+
+.pokeball-top {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 50%;
+  background: #ef4444;
+}
+
+.pokeball-bottom {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 50%;
+  background: #ffffff;
+}
+
+.pokeball-band {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 10px;
+  background: #1e293b;
+  transform: translateY(-50%);
+  z-index: 2;
+}
+
+.pokeball-button {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 5px solid #1e293b;
+  transform: translate(-50%, -50%);
+  z-index: 3;
+}
+
+.pokeball-text {
+  color: #f8fafc;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+/* 좌우 2회 까딱임 후 팽창 */
+.pokeball.is-shaking {
+  animation: pokeball-wobble 1.15s ease-in-out forwards;
+}
+
+@keyframes pokeball-wobble {
+  0%   { transform: rotate(0deg) scale(1); }
+  16%  { transform: rotate(-22deg) scale(1); }
+  32%  { transform: rotate(18deg) scale(1); }
+  50%  { transform: rotate(-16deg) scale(1); }
+  66%  { transform: rotate(12deg) scale(1); }
+  80%  { transform: rotate(0deg) scale(0.96); }
+  100% { transform: rotate(0deg) scale(1.18); }
+}
+
+/* 팡! 터지는 빛 번쩍임 */
+.pokeball-flash {
+  position: absolute;
+  top: 48px;
+  left: 50%;
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #ffffff 0%, rgba(255, 255, 255, 0.85) 45%, rgba(255, 255, 255, 0) 75%);
+  transform: translate(-50%, -50%) scale(0.1);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.pokeball-flash.is-flashing {
+  animation: pokeball-burst 0.35s ease-out forwards;
+}
+
+@keyframes pokeball-burst {
+  0%   { transform: translate(-50%, -50%) scale(0.2); opacity: 0; }
+  45%  { transform: translate(-50%, -50%) scale(2.8); opacity: 1; }
+  100% { transform: translate(-50%, -50%) scale(3.6); opacity: 0; }
+}
+
+/* 결과 카드 톡 튀어나오기 */
+.result-pop-in {
+  animation: result-pop-in 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes result-pop-in {
+  0%   { opacity: 0; transform: scale(0.88) translateY(20px); }
+  65%  { opacity: 1; transform: scale(1.02) translateY(-4px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
+}
