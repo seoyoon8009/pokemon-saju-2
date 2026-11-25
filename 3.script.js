@@ -336,4 +336,123 @@ function renderTodayFortune(myStemIdx) {
   const m = String(now.getMonth() + 1).padStart(2, "0");
   const d = String(now.getDate()).padStart(2, "0");
 
-  const todayPillar = getDayPillar(`${y}-${m}-${d}`); const tenGod = getTenGod(myStemIdx, todayPillar.stemIdx); const f = FORTUNE_DATA[tenGod];  document.getElementById("today-pillar-tag").textContent = `${now.getMonth() + 1}.${now.getDate()}${todayPillar.stem}${todayPillar.branch}(${todayPillar.han
+  const todayPillar = getDayPillar(`${y}-${m}-${d}`); const tenGod = getTenGod(myStemIdx, todayPillar.stemIdx); const f = FORTUNE_DATA[tenGod];  document.getElementById("today-pillar-tag").textContent = `${now.getMonth() + 1}.${now.getDate()}${todayPillar.stem}${todayPillar.branch}(${todayPillar.hanja})일 · ${tenGod}`; document.getElementById("fortune-overall").textContent = f.overall;  const setItem = (key, data) => { const badge = document.getElementById(`fortune-${key}-badge`);
+    badge.textContent = data.level;
+    badge.className = `fortune-badge badge-${data.tone}`; document.getElementById(`fortune-${key}-text`).textContent = data.text;
+  };
+
+  setItem("study", f.study);
+  setItem("money", f.money);
+  setItem("love", f.love);
+  setItem("rest", f.rest);
+}
+
+/* ───────── 공통 유틸 ───────── */
+
+function getBaseUrl() {
+  const url = new URL(window.location.href);
+  url.search = "";
+  url.hash = "";
+  return url;
+}
+
+function scrollToTopInstant() {
+  if (document.activeElement && typeof document.activeElement.blur === "function") {
+    document.activeElement.blur();
+  }
+  window.scrollTo(0, 0);
+  document.documentElement.scrollTop = 0;
+  document.body.scrollTop = 0;
+}
+
+function setPokemonImage(el, src, alt) {
+  el.crossOrigin = "anonymous";
+  el.src = src;
+  el.alt = alt;
+}
+
+async function waitForImages(container) {
+  const imgs = Array.from(container.querySelectorAll("img")).filter((img) => img.src);
+  await Promise.all(
+    imgs.map((img) =>
+      img.complete
+        ? Promise.resolve()
+        : new Promise((res) => {
+            img.addEventListener("load", res, { once: true });
+            img.addEventListener("error", res, { once: true });
+          })
+    )
+  );
+}
+
+/* ───────── 친구 공유 링크 파싱 & 팀플·우정 궁합 계산 ───────── */
+
+let invitedFriend = null;
+
+function parseFriendFromUrl() {
+  const params = new URLSearchParams(window.location.search);
+  const fp = params.get("fp");
+  if (!fp || fp.length !== 2) return null;
+
+  const stem = fp[0];
+  const branch = fp[1];
+  const stemIdx = STEMS.indexOf(stem);
+  const branchIdx = BRANCHES.indexOf(branch);
+  if (stemIdx === -1 || branchIdx === -1) return null;
+
+  const rawName = (params.get("fn") || "").trim().slice(0, 10);
+  const name = rawName || "친구";
+  const pillar = makePillar(stemIdx, branchIdx);
+  const info = RESULT_DATA[stem];
+
+  return { name, pillar, info };
+}
+
+function initFriendInviteBanner() {
+  invitedFriend = parseFriendFromUrl();
+  const banner = document.getElementById("friend-invite-banner");
+  if (!invitedFriend) {
+    banner.classList.add("hidden");
+    return;
+  }
+
+  setPokemonImage(
+    document.getElementById("friend-invite-img"),
+    invitedFriend.info.img,
+    invitedFriend.info.pokemonName
+  );
+  document.getElementById("friend-invite-title").textContent =
+    `${invitedFriend.name}님의 파트너는 ${invitedFriend.info.pokemonName} (${invitedFriend.pillar.stem}${invitedFriend.pillar.branch}일주)!`;
+  document.getElementById("friend-invite-desc").textContent =
+    `내 생년월일을 입력하면 ${invitedFriend.name}님과의 팀플·우정 궁합 점수도 바로 계산해 드려요.`; banner.classList.remove("hidden"); }  document.getElementById("clear-friend-btn").addEventListener("click", () => { invitedFriend = null; document.getElementById("friend-invite-banner").classList.add("hidden"); if (window.location.protocol !== "file:") { window.history.replaceState({}, "", getBaseUrl().toString()); } });  function isBranchYukHap(b1, b2) { return (b1 === 0 && b2 === 1) \vert{}\vert{} (b1 === 1 && b2 === 0) \vert{}\vert{} (b1 >= 2 && b2 >= 2 && b1 + b2 === 13); }  function calcCompatibility(myPillar, friendPillar, myName, friendName) { const s1 = myPillar.stemIdx; const s2 = friendPillar.stemIdx; const el1 = STEM_ELEMENT[s1]; const el2 = STEM_ELEMENT[s2]; const yukHap = isBranchYukHap(myPillar.branchIdx, friendPillar.branchIdx);  let score = 84; let headline = ""; let desc = "";  if ((s1 + 5) \% 10 === s2) { score = 98; headline = "천간합 · 눈빛만 봐도 역할 분담 끝나는 천생연분 콤비"; desc = `${myName}님과 ${friendName}님은 서로의 빈틈을 자석처럼 끌어당겨 채워주는 천간합 관계예요. 한 명이 기획을 열면 다른 한 명이 디테일을 완성해 조별과제 A+ 확률이 가장 높은 조합입니다.`; } else if ((el2 + 1) \% 5 === el1) { score = 94; headline = "상생 시너지 · 나를 성장시켜 주는 특급 캠퍼스 서포터"; desc = `${friendName}님의 기운이 ${myName}님의 에너지를 자연스럽게 북돋워 주는 상생 관계예요. 시험기간에 지칠 때 옆에 있으면 아이디어와 의욕이 샘솟는 든든한 존재입니다.`; } else if ((el1 + 1) \% 5 === el2) { score = 92; headline = "상생 시너지 · 내가 아낌없이 챙겨주게 되는 환상의 후배·동기 케미"; desc = `${myName}님의 기운이 ${friendName}님의 잠재력을 활짝 열어주는 상생 관계예요. 함께 팀을 이루면 자연스럽게 호흡이 맞고 결과물의 완성도가 쑥쑥 올라갑니다.`; } else if (s1 === s2) { score = 90; headline = "도플갱어 콤비 · 말 안 해도 취향과 속도가 똑같은 단짝"; desc = `타고난 일간 기운이 같아서 개그 코드부터 일 처리 방식까지 소름 돋게 잘 통하는 사이예요. 공강 시간에 함께 수다 떨거나 스터디 메이트로 뭉치면 시간 가는 줄 모릅니다.`; } else if (el1 === el2) { score = 87; headline = "동기 케미 · 같은 방향을 바라보며 시너지를 내는 파트너"; desc = `같은 오행 기운을 공유하면서도 음양이 달라 서로 다른 매력을 보여주는 관계예요. 비슷한 목표를 향해 달려갈 때 서로에게 가장 좋은 자극제가 되어줍니다.`; } else { score = 83; headline = "상호보완 듀오 · 다른 시각으로 빈틈을 메워주는 전략 파트너"; desc = `서로 다른 오행 기운을 가지고 있어 처음엔 스타일이 다르게 느껴질 수 있지만, 막상 함께 일하면 내가 놓친 부분을 상대가 정확히 짚어주는 알짜배기 조합입니다.`; }  if (yukHap) { score = Math.min(100, score + 2); desc += " 게다가 속마음(지지 육합)까지 잘 맞아 오래 함께할수록 신뢰가 깊어지는 사이예요."; }  return { score, headline, desc }; }  function renderFriendCompatibility(myPillar, myInfo, myName) { const section = document.getElementById("friend-compat-section"); if (!invitedFriend) { section.classList.add("hidden"); return; }  const displayMyName = myName === "당신" ? "나" : myName; const result = calcCompatibility(myPillar, invitedFriend.pillar, displayMyName, invitedFriend.name);  document.getElementById("compat-score-badge").textContent = `${result.score}점`;
+  setPokemonImage(document.getElementById("compat-my-img"), myInfo.img, myInfo.pokemonName);
+  document.getElementById("compat-my-name").textContent = `${displayMyName} (${myInfo.pokemonName})`;
+
+  setPokemonImage(
+    document.getElementById("compat-friend-img"),
+    invitedFriend.info.img,
+    invitedFriend.info.pokemonName
+  );
+  document.getElementById("compat-friend-name").textContent =
+    `${invitedFriend.name} (${invitedFriend.info.pokemonName})`;
+
+  document.getElementById("compat-headline").textContent = result.headline;
+  document.getElementById("compat-desc").textContent = result.desc;
+  section.classList.remove("hidden");
+}
+
+/* ───────── 몬스터볼 결과 전환 연출 & 오행 폭죽 ───────── */
+
+function ensurePokeballOverlay() {
+  let overlay = document.getElementById("pokeball-overlay");
+  if (!overlay) {
+    overlay = document.createElement("div");
+    overlay.id = "pokeball-overlay";
+    overlay.className = "pokeball-overlay hidden";
+    overlay.setAttribute("aria-hidden", "true");
+    overlay.innerHTML = `
+      <div class="pokeball-stage">
+        <div class="pokeball" id="pokeball-el">
+          <div class="pokeball-top"></div>
+          <div class="pokeball-band"></div>
+          <div class
